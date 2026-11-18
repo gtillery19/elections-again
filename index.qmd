@@ -1,0 +1,72 @@
+---
+title: "Elections 2026"
+---
+
+## North Carolina November 3, 2026 Election Results
+
+Download precinct-level results from the [North Carolina State Board of Elections](https://www.ncsbe.gov/results-data/election-results/historical-election-results-data):
+
+- [Precinct-level results (tab-delimited TXT)](data/results_pct_20261103.txt)
+- [Original results archive (ZIP)](data/results_pct_20261103.zip)
+
+## NC House District Results
+
+This map colors each district by the party of its leading candidate. Candidate votes are summed across precincts; in a race with only one listed candidate, that candidate is shown. District boundaries are from the [2024 U.S. Census TIGER/Line state legislative district files](https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_37_sldl.zip).
+
+```{r}
+library(tidyverse)
+library(sf)
+
+results <- read_tsv("data/results_pct_20261103.txt", show_col_types = FALSE)
+
+house_winners <- results |>
+  filter(str_detect(`Contest Name`, "^NC HOUSE OF REPRESENTATIVES DISTRICT")) |>
+  mutate(district = as.integer(str_extract(`Contest Name`, "\\d+$"))) |>
+  group_by(district, Choice, `Choice Party`) |>
+  summarise(votes = sum(`Total Votes`), .groups = "drop") |>
+  arrange(district, desc(votes)) |>
+  group_by(district) |>
+  slice_head(n = 1) |>
+  ungroup() |>
+  mutate(winner_party = case_when(
+    `Choice Party` == "DEM" ~ "Democratic",
+    `Choice Party` == "REP" ~ "Republican",
+    TRUE ~ "Other"
+  ))
+
+house_districts <- st_read(
+  "data/house_districts/tl_2024_37_sldl.shp",
+  quiet = TRUE
+) |>
+  mutate(district = as.integer(SLDLST)) |>
+  left_join(house_winners, by = "district") |>
+  st_transform("EPSG:5070")
+
+district_labels <- st_point_on_surface(house_districts)
+
+ggplot(house_districts) +
+  geom_sf(aes(fill = winner_party), color = "white", linewidth = 0.15) +
+  geom_sf_text(
+    data = district_labels,
+    aes(label = district),
+    size = 1.5,
+    check_overlap = TRUE,
+    inherit.aes = FALSE
+  ) +
+  scale_fill_manual(
+    values = c(
+      Democratic = "#3B82F6",
+      Republican = "#EF4444",
+      Other = "#8B5CF6"
+    ),
+    name = "Leading candidate's party"
+  ) +
+  coord_sf(datum = NA, expand = FALSE) +
+  labs(
+    title = "Leading candidate in each North Carolina House district",
+    subtitle = "2026 NC House of Representatives races",
+    caption = "Source: NC State Board of Elections; district boundaries: 2024 U.S. Census TIGER/Line."
+  ) +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
