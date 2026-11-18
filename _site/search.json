@@ -18,7 +18,7 @@
     "href": "index.html#nc-house-district-results",
     "title": "Elections 2026",
     "section": "NC House District Results",
-    "text": "NC House District Results\nThis map colors each district by the party of its leading candidate. Candidate votes are summed across precincts; in a race with only one listed candidate, that candidate is shown. District boundaries are from the 2024 U.S. Census TIGER/Line state legislative district files."
+    "text": "NC House District Results\nThis is an original estimate inspired by NCFREE’s map of Roy Cooper’s Senate margin by House district. The article does not publish a district-level data table. Here, Senate votes from each county/precinct location are allocated across House districts in proportion to the NC House votes at that location. This is approximate, especially for early-voting sites, and is not NCFREE’s estimate. Positive margins favor Cooper; the margin is the Democratic minus Republican share of all votes. This uses the downloaded NCSBE results, not the article’s Nov. 4 snapshot. District boundaries are from the 2024 U.S. Census TIGER/Line state legislative district files."
   },
   {
     "objectID": "about.html",
