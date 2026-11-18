@@ -14,6 +14,8 @@ Download precinct-level results from the [North Carolina State Board of Election
 This map colors each district by the party of its leading candidate. Candidate votes are summed across precincts; in a race with only one listed candidate, that candidate is shown. District boundaries are from the [2024 U.S. Census TIGER/Line state legislative district files](https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_37_sldl.zip).
 
 ```{r}
+#| echo: false
+#| message: false
 library(tidyverse)
 library(sf)
 
@@ -42,7 +44,10 @@ house_districts <- st_read(
   left_join(house_winners, by = "district") |>
   st_transform("EPSG:5070")
 
-district_labels <- st_point_on_surface(house_districts)
+district_labels <- st_sf(
+  district = house_districts$district,
+  geometry = st_point_on_surface(st_geometry(house_districts))
+)
 
 ggplot(house_districts) +
   geom_sf(aes(fill = winner_party), color = "white", linewidth = 0.15) +
