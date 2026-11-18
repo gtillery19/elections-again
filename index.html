@@ -114,8 +114,14 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#north-carolina-november-3-2026-election-results" id="toc-north-carolina-november-3-2026-election-results" class="nav-link active" data-scroll-target="#north-carolina-november-3-2026-election-results">North Carolina November 3, 2026 Election Results</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -139,10 +145,16 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This is a Quarto website.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
+<section id="north-carolina-november-3-2026-election-results" class="level2">
+<h2 class="anchored" data-anchor-id="north-carolina-november-3-2026-election-results">North Carolina November 3, 2026 Election Results</h2>
+<p>Download precinct-level results from the <a href="https://www.ncsbe.gov/results-data/election-results/historical-election-results-data">North Carolina State Board of Elections</a>:</p>
+<ul>
+<li><a href="data/results_pct_20261103.txt">Precinct-level results (tab-delimited TXT)</a></li>
+<li><a href="data/results_pct_20261103.zip">Original results archive (ZIP)</a></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -218,7 +230,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/gtillery19\.github\.io\/elections-again\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
